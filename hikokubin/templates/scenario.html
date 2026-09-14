@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% block title %}シナリオメモ｜秘匿便{% endblock %}{% block content %}
+{% set item = draft if draft else scenario %}
+<div class="formwrap"><p class="eyebrow">SCENARIO ARCHIVE</p><h1>{% if scenario %}シナリオメモを編集{% else %}シナリオを保管{% endif %}</h1>
+<form method="post" class="editor">
+<div class="booth-box"><span class="booth-mark">B</span><div><strong>BOOTHから読み込む</strong><p>商品URLを貼ると、タイトルと概要が自動で入ります。</p></div></div>
+<label>BOOTH商品URL<div class="urlrow"><input type="url" name="booth_url" value="{{ item.booth_url if item else '' }}" placeholder="https://○○.booth.pm/items/1234567"><button class="secondary" name="action" value="fetch" formnovalidate>情報を取得</button></div></label>
+<div class="divider"><span>シナリオ情報</span></div>
+<label>シナリオ名<input name="name" required value="{{ item.name if item else '' }}" placeholder="例：薔薇庭女学院"></label>
+<label>KP用メモ<textarea name="memo" rows="18" placeholder="HOの概要、NPC情報、追加秘匿、送信するタイミングなどをまとめて保存できます。">{{ item.memo if item else '' }}</textarea></label>
+<p class="note">このメモはKPの画面にだけ表示され、Discordへは送信されません。</p>
+<div class="formactions"><a href="{{ url_for('dashboard') }}">戻る</a><button class="primary" name="action" value="save">メモを保存</button></div>
+</form></div>{% endblock %}
